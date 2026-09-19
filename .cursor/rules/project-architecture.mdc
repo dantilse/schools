@@ -1,0 +1,21 @@
+---
+description: Preserve Austin ISD directory architecture and source/history conventions.
+alwaysApply: true
+---
+
+Read `PROJECT_CONTEXT.md` before substantial changes.
+
+Preserve normalized IDs and relationships. Use `people.person_id` for stable identity. Keep formal roles in `person_roles`; keep `is_interim` on assignments.
+
+Vertical Team Coordinator is `is_coordinator`, not a role type.
+Vertical Team Lead is `is_vertical_team_lead`, separate from coordinator.
+Support multiple delegates.
+Preserve school-year/history fields and source evidence.
+
+Do not silently replace historical data with current data. Do not present unverified research as authoritative.
+
+When changing the schema, update TypeScript types, JSON seed data, SQLite artifacts, data-access helpers, and UI consumers consistently.
+
+Keep UI independent of storage implementation so JSON can later be replaced by an API/database.
+
+Run the build after significant changes.

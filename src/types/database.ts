@@ -1,0 +1,13 @@
+export type RoleType = "PRINCIPAL" | "PTA_PRESIDENT" | "ACPTA_DELEGATE";
+export interface District { district_id:number; tea_district_id:string; name:string; state?:string; website?:string }
+export interface Campus { campus_id:number; tea_campus_id:string; district_id:number; name:string; level?:string; campus_type?:string; status?:string; official_url?:string; address?:string; city?:string; state?:string; zip?:string; phone?:string; last_verified?:string }
+export interface PTAOrganization { pta_id:number; internal_pta_id:string; name?:string; pta_type?:string; status?:string; texas_pta_id?:string; website?:string; email?:string; phone?:string; facebook_url?:string; instagram_url?:string; last_verified?:string }
+export interface CampusPTA { campus_id:number; pta_id:number; relationship_type?:string; start_date?:string; end_date?:string; is_current:number }
+export interface Person { person_id:number; first_name?:string; middle_name?:string; last_name?:string; display_name:string; email?:string; phone?:string; status?:string; last_verified?:string }
+export interface PersonRole { person_role_id:number; person_id:number; role_type:RoleType; campus_id?:number; pta_id?:number; is_interim:number; start_date?:string; end_date?:string; school_year?:string; is_current:number; source_id?:number }
+export interface VerticalTeam { vertical_team_id:number; name:string; high_school_campus_id?:number; school_year:string; status?:string; website?:string; last_verified?:string }
+export interface CampusVerticalTeam { campus_id:number; vertical_team_id:number; is_current:number; start_date?:string; end_date?:string; school_year?:string }
+export interface VerticalTeamMember { vertical_team_member_id:number; vertical_team_id:number; person_id:number; role_type:RoleType; campus_id?:number; pta_id?:number; is_coordinator:number; is_vertical_team_lead:number; school_year:string; start_date?:string; end_date?:string; is_current:number; source_id?:number }
+export interface Source { source_id:number; source_type?:string; name?:string; url?:string; publisher?:string; accessed_at?:string; notes?:string }
+export interface SourceEvidence { evidence_id:number; source_id:number; entity_type:string; entity_id:string; evidence_type?:string; evidence_text?:string; verified_at?:string; confidence?:string; notes?:string }
+export interface Database { schema_version:string; database:Record<string,unknown>; districts:District[]; campuses:Campus[]; pta_organizations:PTAOrganization[]; campus_pta:CampusPTA[]; sources:Source[]; source_evidence:SourceEvidence[]; people:Person[]; person_roles:PersonRole[]; vertical_teams:VerticalTeam[]; campus_vertical_team:CampusVerticalTeam[]; vertical_team_members:VerticalTeamMember[] }

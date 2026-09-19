@@ -1,0 +1,14 @@
+import raw from "../data/austin_isd_database.json";
+import type { Campus, Database, Person, PersonRole, PTAOrganization, Source, SourceEvidence, VerticalTeamMember } from "../types/database";
+const db = raw as unknown as Database;
+export const getCampuses=()=>db.campuses; export const getPTAs=()=>db.pta_organizations; export const getVerticalTeams=()=>db.vertical_teams; export const getPeople=()=>db.people;
+export const getCampus=(id:number)=>db.campuses.find(c=>c.campus_id===id); export const getPTA=(id:number)=>db.pta_organizations.find(p=>p.pta_id===id); export const getPerson=(id:number)=>db.people.find(p=>p.person_id===id);
+export const getCampusPTA=(id:number)=>{const r=db.campus_pta.find(x=>x.campus_id===id&&x.is_current);return r?getPTA(r.pta_id):undefined}; export const getPTACampus=(id:number)=>{const r=db.campus_pta.find(x=>x.pta_id===id&&x.is_current);return r?getCampus(r.campus_id):undefined};
+export const getCampusRoles=(id:number)=>db.person_roles.filter(r=>r.campus_id===id&&r.is_current); export const getPTARoles=(id:number)=>db.person_roles.filter(r=>r.pta_id===id&&r.is_current);
+export const getVerticalTeamMembers=(id:number):VerticalTeamMember[]=>db.vertical_team_members.filter(m=>m.vertical_team_id===id&&m.is_current);
+export const getCampusVerticalTeam=(id:number,year?:string)=>db.campus_vertical_team.filter(r=>r.campus_id===id&&(year?r.school_year===year:r.is_current)); export const getVerticalTeam=(id:number)=>db.vertical_teams.find(v=>v.vertical_team_id===id);
+export const getCampusSources=(campus:Campus):Source[]=>db.source_evidence.filter(e=>e.entity_type==="campus"&&e.entity_id===String(campus.campus_id)).map(e=>db.sources.find(s=>s.source_id===e.source_id)).filter(Boolean) as Source[];
+export const getPTASources=(pta:PTAOrganization):Source[]=>db.source_evidence.filter(e=>e.entity_type==="pta"&&e.entity_id===String(pta.pta_id)).map(e=>db.sources.find(s=>s.source_id===e.source_id)).filter(Boolean) as Source[];
+export const getSourceEvidence=(id:number):SourceEvidence[]=>db.source_evidence.filter(e=>e.source_id===id);
+export { db };
+export const database = db;
