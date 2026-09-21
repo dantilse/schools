@@ -8,8 +8,13 @@ export function Schools() {
   const [pta, setPta] = useState("All");
 
   const levels = useMemo(
-    () => ["All", ...Array.from(new Set(database.campuses.map((c) => c.level).filter(Boolean)))],
-    []
+    () => [
+      "All",
+      ...Array.from(
+        new Set(database.campuses.map((c) => c.level).filter(Boolean)),
+      ),
+    ],
+    [],
   );
 
   const results = useMemo(() => {
@@ -21,7 +26,7 @@ export function Schools() {
         campus.tea_campus_id.includes(q);
       const matchesLevel = level === "All" || campus.level === level;
       const hasPta = database.campus_pta.some(
-        (r) => r.campus_id === campus.campus_id && r.is_current === 1
+        (r) => r.campus_id === campus.campus_id && r.is_current === 1,
       );
       const matchesPta =
         pta === "All" ||
@@ -36,7 +41,9 @@ export function Schools() {
       <div className="container">
         <span className="eyebrow">Directory</span>
         <h1>Schools</h1>
-        <p className="page-intro">Browse all schools currently represented in the directory.</p>
+        <p className="page-intro">
+          Browse all schools currently represented in the directory.
+        </p>
 
         <div className="filters">
           <input
@@ -46,7 +53,9 @@ export function Schools() {
             onChange={(e) => setQuery(e.target.value)}
           />
           <select value={level} onChange={(e) => setLevel(e.target.value)}>
-            {levels.map((item) => <option key={item}>{item}</option>)}
+            {levels.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
           </select>
           <select value={pta} onChange={(e) => setPta(e.target.value)}>
             <option>All</option>
@@ -57,7 +66,9 @@ export function Schools() {
 
         <div className="result-count">{results.length} schools</div>
         <div className="card-grid">
-          {results.map((campus) => <SchoolCard key={campus.campus_id} campus={campus} />)}
+          {results.map((campus) => (
+            <SchoolCard key={campus.campus_id} campus={campus} />
+          ))}
         </div>
       </div>
     </section>

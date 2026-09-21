@@ -15,7 +15,7 @@ export function Layout() {
           <nav>
             <NavLink to="/schools">Schools</NavLink>
             <NavLink to="/ptas">PTAs</NavLink>
-          <NavLink to="/vertical-teams">Vertical Teams</NavLink>
+            <NavLink to="/vertical-teams">Vertical Teams</NavLink>
             <NavLink to="/sources">Sources</NavLink>
             <NavLink to="/about">About</NavLink>
           </nav>

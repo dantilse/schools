@@ -12,7 +12,9 @@ export function PTACard({ pta }: { pta: PTAOrganization }) {
         <p className="muted">{campus?.name || "Related school not verified"}</p>
       </div>
       <div className="card-meta">
-        <span className="status-pill active">{pta.status || "Status not verified"}</span>
+        <span className="status-pill active">
+          {pta.status || "Status not verified"}
+        </span>
       </div>
       <Link className="card-link" to={`/ptas/${pta.pta_id}`}>
         View PTA →

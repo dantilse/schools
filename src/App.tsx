@@ -22,9 +22,12 @@ export default function App() {
           <Route path="/ptas/:id" element={<PTADetail />} />
           <Route path="/sources" element={<Sources />} />
           <Route path="/about" element={<About />} />
-        <Route path="/vertical-teams" element={<VerticalTeams />} />
-        <Route path="/vertical-teams/:id" element={<VerticalTeamDetail />} />
-          <Route path="/campuses" element={<Navigate to="/schools" replace />} />
+          <Route path="/vertical-teams" element={<VerticalTeams />} />
+          <Route path="/vertical-teams/:id" element={<VerticalTeamDetail />} />
+          <Route
+            path="/campuses"
+            element={<Navigate to="/schools" replace />}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

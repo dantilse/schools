@@ -12,7 +12,9 @@ export function SchoolDetail() {
   return (
     <section className="section">
       <div className="container detail">
-        <Link to="/schools" className="back-link">← All schools</Link>
+        <Link to="/schools" className="back-link">
+          ← All schools
+        </Link>
         <span className="eyebrow">{campus.level || "School"}</span>
         <h1>{campus.name}</h1>
         <p className="muted">TEA Campus ID: {campus.tea_campus_id}</p>
@@ -24,10 +26,24 @@ export function SchoolDetail() {
               <dl>
                 <Info label="Status" value={campus.status} />
                 <Info label="Campus type" value={campus.campus_type} />
-                <Info label="Address" value={[campus.address, campus.city, campus.state, campus.zip].filter(Boolean).join(", ")} />
+                <Info
+                  label="Address"
+                  value={[campus.address, campus.city, campus.state, campus.zip]
+                    .filter(Boolean)
+                    .join(", ")}
+                />
                 <Info label="Phone" value={campus.phone} />
               </dl>
-              {campus.official_url && <a className="external-link" href={campus.official_url} target="_blank" rel="noreferrer">Visit school website ↗</a>}
+              {campus.official_url && (
+                <a
+                  className="external-link"
+                  href={campus.official_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit school website ↗
+                </a>
+              )}
             </section>
 
             <section className="detail-section">
@@ -37,12 +53,18 @@ export function SchoolDetail() {
                   <div>
                     <span className="eyebrow">{pta.pta_type || "PTA"}</span>
                     <h3>{pta.name}</h3>
-                    <p className="muted">{pta.status || "Status not verified"}</p>
+                    <p className="muted">
+                      {pta.status || "Status not verified"}
+                    </p>
                   </div>
-                  <Link className="button secondary" to={`/ptas/${pta.pta_id}`}>View PTA</Link>
+                  <Link className="button secondary" to={`/ptas/${pta.pta_id}`}>
+                    View PTA
+                  </Link>
                 </div>
               ) : (
-                <p className="muted">No current PTA relationship is verified in the dataset.</p>
+                <p className="muted">
+                  No current PTA relationship is verified in the dataset.
+                </p>
               )}
             </section>
           </div>
@@ -51,11 +73,21 @@ export function SchoolDetail() {
             <h3>Verification</h3>
             <p>Last verified: {campus.last_verified || "Not recorded"}</p>
             <h3>Sources</h3>
-            {sources.length ? sources.map((source) => (
-              <a key={source.source_id} className="source-item" href={source.url || "#"} target="_blank" rel="noreferrer">
-                {source.name || source.url || "Source"} ↗
-              </a>
-            )) : <p className="muted">No source records linked.</p>}
+            {sources.length ? (
+              sources.map((source) => (
+                <a
+                  key={source.source_id}
+                  className="source-item"
+                  href={source.url || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {source.name || source.url || "Source"} ↗
+                </a>
+              ))
+            ) : (
+              <p className="muted">No source records linked.</p>
+            )}
           </aside>
         </div>
       </div>
@@ -65,9 +97,21 @@ export function SchoolDetail() {
 
 function Info({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
-  return <><dt>{label}</dt><dd>{value}</dd></>;
+  return (
+    <>
+      <dt>{label}</dt>
+      <dd>{value}</dd>
+    </>
+  );
 }
 
 function NotFound({ label }: { label: string }) {
-  return <section className="section"><div className="container"><h1>{label} not found</h1><Link to="/">Return home</Link></div></section>;
+  return (
+    <section className="section">
+      <div className="container">
+        <h1>{label} not found</h1>
+        <Link to="/">Return home</Link>
+      </div>
+    </section>
+  );
 }
