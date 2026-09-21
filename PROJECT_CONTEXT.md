@@ -33,7 +33,7 @@ Keep UI independent of storage so JSON can later be replaced by API/database cal
 `/campuses` may redirect to `/schools`.
 
 ## Core data model
-Entities: District, Campus, PTA organization, Person, Person role assignment, Vertical Team, Campus↔PTA, Campus↔Vertical Team, Vertical Team membership, Source, Source evidence.
+Entities: District, Campus, PTA organization, Person, Person role assignment, Campus accountability, Vertical Team, Campus↔PTA, Campus↔Vertical Team, Vertical Team membership, Source, Source evidence.
 
 ### Stable person identity
 `people.person_id` is the stable identity. Never use a person's name as the primary identifier. Names can change and people can have historical assignments.
@@ -63,6 +63,14 @@ Lead is a separate designation. Use `vertical_team_members.is_vertical_team_lead
 
 ## History
 Preserve `school_year`, `start_date`, `end_date`, and `is_current`. Do not overwrite historical assignments.
+
+### Campus↔PTA history
+`campus_pta` records the association type and its annual `status`. Its `school_year` is optional only for legacy relationships whose year is not sourced; do not infer a year or status for those records. A scoped record represents the relationship for one canonical project school year.
+
+### Campus accountability history
+`campus_accountability` records the annual official UA Rating Count for a campus. `school_year` is always the canonical project format, `YYYY-YY` (for example, `2025-26`). Preserve a release's original TEA/AISD label in `reported_year` when it differs from that canonical value; do not derive one silently.
+
+`publication_status` distinguishes `PRELIMINARY` from `FINAL`. `is_current` identifies the latest published value for a campus-year, not whether the value is preliminary or final. Preserve superseded preliminary and corrected values as historical rows. Every accountability row must retain its direct `source_id`, and supporting details belong in `source_evidence` with `entity_type: "campus_accountability"`.
 
 The seeded Vertical Team data came from the supplied ACPTA 2025–26 assignment PDF and is historical/seed data until independently verified for 2026–27.
 
