@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { database } from "../lib/data";
+import { database, getCampusPTA } from "../lib/data";
 import { PTACard } from "../components/PTACard";
 
 export function PTAs() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("All");
+  const [status, setStatus] = useState("All");
 
   const types = useMemo(
     () => [
@@ -20,21 +21,23 @@ export function PTAs() {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return database.pta_organizations.filter((pta) => {
-      const campusName = database.campus_pta.find(
-        (r) => r.pta_id === pta.pta_id && r.is_current === 1,
-      );
-      const campus = campusName
-        ? database.campuses.find((c) => c.campus_id === campusName.campus_id)
-        : undefined;
+    return database.campuses.filter((campus) => {
+      const pta = getCampusPTA(campus.campus_id);
+      const established = Boolean(pta);
+      const displayName = pta?.name || `${campus.name} PTA`;
       const haystack =
-        `${pta.name || ""} ${pta.internal_pta_id} ${campus?.name || ""}`.toLowerCase();
-      return (
-        (!q || haystack.includes(q)) &&
-        (type === "All" || pta.pta_type === type)
-      );
+        `${displayName} ${pta?.internal_pta_id || ""} ${campus.name} ${campus.tea_campus_id}`.toLowerCase();
+      const matchesQuery = !q || haystack.includes(q);
+      const matchesType =
+        type === "All" ||
+        (established ? pta?.pta_type === type : type === "PTA");
+      const matchesStatus =
+        status === "All" ||
+        (status === "Established" && established) ||
+        (status === "Not established" && !established);
+      return matchesQuery && matchesType && matchesStatus;
     });
-  }, [query, type]);
+  }, [query, type, status]);
 
   return (
     <section className="section">
@@ -42,7 +45,7 @@ export function PTAs() {
         <span className="eyebrow">Directory</span>
         <h1>PTAs</h1>
         <p className="page-intro">
-          Browse PTA and PTSA organizations represented in the directory.
+          Browse PTA and PTSA organizations for every school in the directory.
         </p>
 
         <div className="filters">
@@ -57,12 +60,17 @@ export function PTAs() {
               <option key={item}>{item}</option>
             ))}
           </select>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option>All</option>
+            <option>Established</option>
+            <option>Not established</option>
+          </select>
         </div>
 
-        <div className="result-count">{results.length} PTA organizations</div>
+        <div className="result-count">{results.length} PTA listings</div>
         <div className="card-grid">
-          {results.map((pta) => (
-            <PTACard key={pta.pta_id} pta={pta} />
+          {results.map((campus) => (
+            <PTACard key={campus.campus_id} campus={campus} />
           ))}
         </div>
       </div>

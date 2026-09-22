@@ -19,6 +19,7 @@ export default function App() {
           <Route path="/schools" element={<Schools />} />
           <Route path="/schools/:id" element={<SchoolDetail />} />
           <Route path="/ptas" element={<PTAs />} />
+          <Route path="/ptas/campus/:campusId" element={<PTADetail />} />
           <Route path="/ptas/:id" element={<PTADetail />} />
           <Route path="/sources" element={<Sources />} />
           <Route path="/about" element={<About />} />

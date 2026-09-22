@@ -1,60 +1,138 @@
-import { Link, useParams } from "react-router-dom";
-import { getPTA, getPTACampus, getPTASources } from "../lib/data";
+import { Link, Navigate, useParams } from "react-router-dom";
+import {
+  getCampus,
+  getCampusPTA,
+  getPTA,
+  getPTACampus,
+  getPTASources,
+  unverifiedPTAName,
+} from "../lib/data";
+import type { Campus, PTAOrganization, Source } from "../types/database";
 
 export function PTADetail() {
-  const { id } = useParams();
+  const { id, campusId } = useParams();
+
+  if (campusId) {
+    const campus = getCampus(Number(campusId));
+    if (!campus) return <NotFound />;
+    const existing = getCampusPTA(campus.campus_id);
+    if (existing) return <Navigate to={`/ptas/${existing.pta_id}`} replace />;
+    return (
+      <PTADetailView
+        name={unverifiedPTAName(campus)}
+        type="PTA"
+        status="PTA not verified"
+        internalId="N/A"
+        campus={campus}
+        sources={[]}
+        lastVerified={null}
+      />
+    );
+  }
+
   const pta = getPTA(Number(id));
   if (!pta) return <NotFound />;
+  return <EstablishedPTADetail pta={pta} />;
+}
 
+function EstablishedPTADetail({ pta }: { pta: PTAOrganization }) {
   const campus = getPTACampus(pta.pta_id);
   const sources = getPTASources(pta);
 
+  return (
+    <PTADetailView
+      name={pta.name || pta.internal_pta_id}
+      type={pta.pta_type || "PTA"}
+      status={pta.status || "Status not verified"}
+      internalId={pta.internal_pta_id}
+      texasPtaId={pta.texas_pta_id}
+      email={pta.email}
+      phone={pta.phone}
+      website={pta.website}
+      facebookUrl={pta.facebook_url}
+      instagramUrl={pta.instagram_url}
+      campus={campus}
+      sources={sources}
+      lastVerified={pta.last_verified}
+    />
+  );
+}
+
+function PTADetailView({
+  name,
+  type,
+  status,
+  internalId,
+  texasPtaId,
+  email,
+  phone,
+  website,
+  facebookUrl,
+  instagramUrl,
+  campus,
+  sources,
+  lastVerified,
+}: {
+  name: string;
+  type: string;
+  status: string;
+  internalId: string;
+  texasPtaId?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  facebookUrl?: string | null;
+  instagramUrl?: string | null;
+  campus?: Campus;
+  sources: Source[];
+  lastVerified?: string | null;
+}) {
   return (
     <section className="section">
       <div className="container detail">
         <Link to="/ptas" className="back-link">
           ← All PTAs
         </Link>
-        <span className="eyebrow">{pta.pta_type || "PTA"}</span>
-        <h1>{pta.name || pta.internal_pta_id}</h1>
-        <p className="muted">{pta.status || "Status not verified"}</p>
+        <span className="eyebrow">{type}</span>
+        <h1>{name}</h1>
+        <p className="muted">{status}</p>
 
         <div className="detail-grid">
           <div className="detail-main">
             <section className="detail-section">
               <h2>PTA information</h2>
               <dl>
-                <Info label="Internal PTA ID" value={pta.internal_pta_id} />
-                <Info label="Texas PTA ID" value={pta.texas_pta_id} />
-                <Info label="Status" value={pta.status} />
-                <Info label="Email" value={pta.email} />
-                <Info label="Phone" value={pta.phone} />
+                <Info label="Internal PTA ID" value={internalId} />
+                <Info label="Texas PTA ID" value={texasPtaId} />
+                <Info label="Status" value={status} />
+                <Info label="Email" value={email} />
+                <Info label="Phone" value={phone} />
               </dl>
               <div className="button-row">
-                {pta.website && (
+                {website && (
                   <a
                     className="button secondary"
-                    href={pta.website}
+                    href={website}
                     target="_blank"
                     rel="noreferrer"
                   >
                     PTA website ↗
                   </a>
                 )}
-                {pta.facebook_url && (
+                {facebookUrl && (
                   <a
                     className="button secondary"
-                    href={pta.facebook_url}
+                    href={facebookUrl}
                     target="_blank"
                     rel="noreferrer"
                   >
                     Facebook ↗
                   </a>
                 )}
-                {pta.instagram_url && (
+                {instagramUrl && (
                   <a
                     className="button secondary"
-                    href={pta.instagram_url}
+                    href={instagramUrl}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -92,7 +170,7 @@ export function PTADetail() {
 
           <aside className="detail-aside">
             <h3>Verification</h3>
-            <p>Last verified: {pta.last_verified || "Not recorded"}</p>
+            <p>Last verified: {lastVerified || "Not recorded"}</p>
             <h3>Sources</h3>
             {sources.length ? (
               sources.map((source) => (
