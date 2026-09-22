@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { getCampus, getCampusPTA, getCampusSources } from "../lib/data";
+import { getCampus, getCampusPTA, getCampusPTAPath, getCampusSources, unverifiedPTAName } from "../lib/data";
 
 export function SchoolDetail() {
   const { id } = useParams();
@@ -48,24 +48,21 @@ export function SchoolDetail() {
 
             <section className="detail-section">
               <h2>Parent organization</h2>
-              {pta ? (
-                <div className="related-card">
-                  <div>
-                    <span className="eyebrow">{pta.pta_type || "PTA"}</span>
-                    <h3>{pta.name}</h3>
-                    <p className="muted">
-                      {pta.status || "Status not verified"}
-                    </p>
-                  </div>
-                  <Link className="button secondary" to={`/ptas/${pta.pta_id}`}>
-                    View PTA
-                  </Link>
+              <div className="related-card">
+                <div>
+                  <span className="eyebrow">{pta?.pta_type || "PTA"}</span>
+                  <h3>{pta?.name || unverifiedPTAName(campus)}</h3>
+                  <p className="muted">
+                    {pta ? pta.status || "Status not verified" : "PTA not verified"}
+                  </p>
                 </div>
-              ) : (
-                <p className="muted">
-                  No current PTA relationship is verified in the dataset.
-                </p>
-              )}
+                <Link
+                  className="button secondary"
+                  to={getCampusPTAPath(campus.campus_id)}
+                >
+                  View PTA
+                </Link>
+              </div>
             </section>
           </div>
 

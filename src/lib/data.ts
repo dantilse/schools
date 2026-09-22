@@ -48,6 +48,11 @@ export const getPTACampus = (id: number, schoolYear?: string) => {
   const r = getPTACampusRelationship(id, schoolYear);
   return r ? getCampus(r.campus_id) : undefined;
 };
+export const unverifiedPTAName = (campus: Campus) => `${campus.name} PTA`;
+export const getCampusPTAPath = (campusId: number) => {
+  const pta = getCampusPTA(campusId);
+  return pta ? `/ptas/${pta.pta_id}` : `/ptas/campus/${campusId}`;
+};
 export const getCampusPTAHistory = (id: number): CampusPTA[] =>
   db.campus_pta.filter((x) => x.campus_id === id);
 export const getPTACampusHistory = (id: number): CampusPTA[] =>
