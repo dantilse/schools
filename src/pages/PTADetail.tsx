@@ -77,7 +77,7 @@ function PTADetailView({
   type: string;
   status: string;
   internalId: string;
-  texasPtaId?: string | null;
+  texasPtaId?: number | null;
   email?: string | null;
   phone?: string | null;
   website?: string | null;
@@ -103,7 +103,7 @@ function PTADetailView({
               <h2>PTA information</h2>
               <dl>
                 <Info label="Internal PTA ID" value={internalId} />
-                <Info label="Texas PTA ID" value={texasPtaId} />
+                <Info label="Texas PTA ID" value={texasPtaId != null ? String(texasPtaId) : undefined} />
                 <Info label="Status" value={status} />
                 <Info label="Email" value={email} />
                 <Info label="Phone" value={phone} />

@@ -3,12 +3,14 @@ import type {
   Campus,
   CampusAccountability,
   CampusPTA,
+  CampusVerticalTeam,
   Database,
-  Person,
-  PersonRole,
   PTAOrganization,
   Source,
   SourceEvidence,
+  VerticalTeam,
+  VerticalTeamGroup,
+  VerticalTeamGroupParent,
   VerticalTeamMember,
 } from "../types/database";
 const db = raw as unknown as Database;
@@ -86,16 +88,95 @@ export const getCampusRoles = (id: number) =>
   db.person_roles.filter((r) => r.campus_id === id && r.is_current);
 export const getPTARoles = (id: number) =>
   db.person_roles.filter((r) => r.pta_id === id && r.is_current);
-export const getVerticalTeamMembers = (id: number): VerticalTeamMember[] =>
-  db.vertical_team_members.filter(
-    (m) => m.vertical_team_id === id && m.is_current,
-  );
-export const getCampusVerticalTeam = (id: number, year?: string) =>
-  db.campus_vertical_team.filter(
-    (r) => r.campus_id === id && (year ? r.school_year === year : r.is_current),
-  );
 export const getVerticalTeam = (id: number) =>
   db.vertical_teams.find((v) => v.vertical_team_id === id);
+const matchesTeamYear = (row: { school_year?: string; is_current: number }, team?: VerticalTeam, year?: string) => {
+  if (year) return row.school_year === year;
+  if (team?.school_year) return row.school_year === team.school_year || Boolean(row.is_current);
+  return Boolean(row.is_current);
+};
+export const getVerticalTeamMembers = (id: number, year?: string): VerticalTeamMember[] => {
+  const team = getVerticalTeam(id);
+  return db.vertical_team_members.filter(
+    (m) => m.vertical_team_id === id && matchesTeamYear(m, team, year),
+  );
+};
+export const getCampusVerticalTeam = (id: number, year?: string): CampusVerticalTeam[] => {
+  const rows = db.campus_vertical_team.filter((r) => r.campus_id === id);
+  if (year) return rows.filter((r) => r.school_year === year);
+  const current = rows.filter((r) => r.is_current);
+  return current.length ? current : rows;
+};
+export const getVerticalTeamCampuses = (id: number, year?: string): Campus[] => {
+  const team = getVerticalTeam(id);
+  return db.campus_vertical_team
+    .filter((r) => r.vertical_team_id === id && matchesTeamYear(r, team, year))
+    .map((r) => getCampus(r.campus_id))
+    .filter(Boolean) as Campus[];
+};
+export const getVerticalTeamGroups = (id: number, year?: string): VerticalTeamGroup[] => {
+  const team = getVerticalTeam(id);
+  return db.vertical_team_groups.filter(
+    (g) => g.vertical_team_id === id && matchesTeamYear(g, team, year),
+  );
+};
+
+export const getVerticalTeamGroupParents = (
+  groupId: number,
+): VerticalTeamGroupParent[] =>
+  db.vertical_team_group_parents.filter((p) => p.vertical_team_group_id === groupId);
+
+export type VerticalTeamCampusGroup = {
+  vertical_team_group_id?: number;
+  parents: Campus[];
+  campuses: Campus[];
+};
+export type VerticalTeamTree = {
+  highSchool?: Campus;
+  groups: VerticalTeamCampusGroup[];
+  otherCampuses: Campus[];
+};
+
+export const getVerticalTeamTree = (id: number, year?: string): VerticalTeamTree => {
+  const team = getVerticalTeam(id);
+  const schoolYear = year ?? team?.school_year;
+  const roster = getVerticalTeamCampuses(id, schoolYear);
+  const rosterIds = new Set(roster.map((c) => c.campus_id));
+  const byName = (a: Campus, b: Campus) => a.name.localeCompare(b.name);
+  const highSchool = team?.high_school_campus_id
+    ? roster.find((c) => c.campus_id === team.high_school_campus_id)
+    : undefined;
+  const nested = new Set<number>();
+  if (highSchool) nested.add(highSchool.campus_id);
+  const groups: VerticalTeamCampusGroup[] = [];
+  for (const group of getVerticalTeamGroups(id, schoolYear)) {
+    const parents = getVerticalTeamGroupParents(group.vertical_team_group_id)
+      .map((p) => getCampus(p.campus_id))
+      .filter((c): c is Campus => c != null && rosterIds.has(c.campus_id))
+      .sort(byName);
+    if (!parents.length) continue;
+    parents.forEach((c) => nested.add(c.campus_id));
+    const campuses = db.vertical_team_group_members
+      .filter((m) => m.vertical_team_group_id === group.vertical_team_group_id)
+      .map((m) => getCampus(m.campus_id))
+      .filter((c): c is Campus => c != null && rosterIds.has(c.campus_id))
+      .sort(byName);
+    campuses.forEach((c) => nested.add(c.campus_id));
+    groups.push({
+      vertical_team_group_id: group.vertical_team_group_id,
+      parents,
+      campuses,
+    });
+  }
+  groups.sort((a, b) => byName(a.parents[0]!, b.parents[0]!));
+  const groupedParents = new Set(groups.flatMap((g) => g.parents.map((p) => p.campus_id)));
+  for (const middle of roster.filter((c) => c.level === "Middle" && !groupedParents.has(c.campus_id)).sort(byName)) {
+    nested.add(middle.campus_id);
+    groups.push({ parents: [middle], campuses: [] });
+  }
+  const otherCampuses = roster.filter((c) => !nested.has(c.campus_id)).sort(byName);
+  return { highSchool, groups, otherCampuses };
+};
 export const getCampusSources = (campus: Campus): Source[] =>
   db.source_evidence
     .filter(

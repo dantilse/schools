@@ -90,6 +90,16 @@ dd { margin: 0; font-weight: 600; }
 .detail-aside p { color: var(--muted); font-size: 13px; margin-bottom: 25px; }
 .related-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #f6f7f9; border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
 
+.vt-campus { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.vt-campus:last-child { border-bottom: 0; }
+.vt-campus-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.vt-campus-head a { font-weight: 700; }
+.vt-elementary { margin-top: 18px; padding-left: 18px; border-left: 3px solid var(--soft); }
+.detail-section > .vt-campus + .vt-campus { border-top: 1px solid var(--line); }
+.vt-elementary h3 { font-size: 16px; margin-bottom: 8px; }
+.vt-people { margin: 8px 0 0; padding-left: 18px; }
+.vt-people li { margin: 4px 0; }
+
 .narrow { max-width: 780px; }
 .narrow p { color: var(--muted); font-size: 17px; }
 .notice { margin-top: 30px; padding: 20px; background: var(--soft); border-radius: 12px; }

@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { getCampus, getCampusPTA, getCampusPTAPath, getCampusSources, unverifiedPTAName } from "../lib/data";
+import { getCampus, getCampusPTA, getCampusPTAPath, getCampusSources, getCampusVerticalTeam, getVerticalTeam, unverifiedPTAName } from "../lib/data";
 
 export function SchoolDetail() {
   const { id } = useParams();
@@ -8,6 +8,9 @@ export function SchoolDetail() {
 
   const pta = getCampusPTA(campus.campus_id);
   const sources = getCampusSources(campus);
+  const verticalTeams = getCampusVerticalTeam(campus.campus_id)
+    .map((r) => getVerticalTeam(r.vertical_team_id))
+    .filter((team): team is NonNullable<typeof team> => Boolean(team));
 
   return (
     <section className="section">
@@ -63,6 +66,26 @@ export function SchoolDetail() {
                   View PTA
                 </Link>
               </div>
+            </section>
+
+            <section className="detail-section">
+              <h2>Vertical Team</h2>
+              {verticalTeams.length ? (
+                verticalTeams.map((team) => (
+                  <div className="related-card" key={team.vertical_team_id}>
+                    <div>
+                      <span className="eyebrow">{team.school_year}</span>
+                      <h3>{team.name}</h3>
+                      <p className="muted">{team.status || "Status not verified"}</p>
+                    </div>
+                    <Link className="button secondary" to={`/vertical-teams/${team.vertical_team_id}`}>
+                      View team
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p className="muted">No Vertical Team campus link is recorded for this school.</p>
+              )}
             </section>
           </div>
 

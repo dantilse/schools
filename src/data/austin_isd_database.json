@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.5.0",
   "database": {
     "name": "Austin ISD Campus & PTA Database",
     "description": "Normalized Austin ISD campus, PTA organization, relationship, and source-evidence database.",
-    "generated_at": "2026-09-18T14:52:35",
+    "generated_at": "2026-09-22T14:30:00",
     "primary_keys": {
       "district": "district_id",
       "campus": "campus_id",
@@ -11,7 +11,10 @@
       "source": "source_id",
       "evidence": "evidence_id",
       "campus_pta": "campus_pta_id",
-      "campus_accountability": "campus_accountability_id"
+      "campus_accountability": "campus_accountability_id",
+      "vertical_team_group": "vertical_team_group_id",
+      "vertical_team_group_member": "vertical_team_group_member_id",
+      "vertical_team_group_parent": "vertical_team_group_parent_id"
     },
     "external_identifiers": {
       "district": "tea_district_id",
@@ -30,6 +33,9 @@
       "person_roles",
       "vertical_teams",
       "campus_vertical_team",
+      "vertical_team_groups",
+      "vertical_team_group_parents",
+      "vertical_team_group_members",
       "vertical_team_members"
     ],
     "design_notes": [
@@ -38,7 +44,10 @@
       "Vertical Team membership has independent is_coordinator and is_vertical_team_lead flags.",
       "Multiple delegates are represented by multiple vertical_team_members rows.",
       "Seeded Vertical Team composition comes from ACPTA 2025-26 PDF.",
-      "Campus accountability records retain source provenance, canonical school-year history, and preliminary/final publication status."
+      "Campus accountability records retain source provenance, canonical school-year history, and preliminary/final publication status.",
+      "Austin Vertical Team elementary-to-middle grouping is directory composition, not an official AISD feeder-map extract.",
+      "Campus-to-Vertical-Team membership is explicit in campus_vertical_team.",
+      "vertical_team_groups clusters campuses on one team; parents are in vertical_team_group_parents so multiple middle schools can share one elementary list. The high school grouping is the team itself."
     ]
   },
   "districts": [
@@ -2011,7 +2020,7 @@
       "name": "Allison Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 576,
       "website": null,
       "email": null,
       "phone": null,
@@ -2025,7 +2034,7 @@
       "name": "Andrews Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 584,
       "website": null,
       "email": null,
       "phone": null,
@@ -2039,7 +2048,7 @@
       "name": "Baldwin Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 2232617,
       "website": null,
       "email": null,
       "phone": null,
@@ -2053,8 +2062,8 @@
       "name": "Baranoff Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
-      "website": "https://baranoff.austinschools.org/parents/pta",
+      "texas_pta_id": 595,
+      "website": "https://www.baranoffpta.org/",
       "email": null,
       "phone": null,
       "facebook_url": null,
@@ -2067,7 +2076,7 @@
       "name": "Barton Hills Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 600,
       "website": null,
       "email": null,
       "phone": null,
@@ -2081,7 +2090,7 @@
       "name": "Bear Creek Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 2311788,
       "website": null,
       "email": null,
       "phone": null,
@@ -2109,7 +2118,7 @@
       "name": "Blackshear Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 612,
       "website": null,
       "email": null,
       "phone": null,
@@ -2123,7 +2132,7 @@
       "name": "Blanton Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11900,
       "website": "https://blantonpta.membershiptoolkit.com/our_pta",
       "email": null,
       "phone": null,
@@ -2137,7 +2146,7 @@
       "name": "Blazier Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11852,
       "website": null,
       "email": null,
       "phone": null,
@@ -2151,7 +2160,7 @@
       "name": "Boone Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 618,
       "website": null,
       "email": null,
       "phone": null,
@@ -2165,7 +2174,7 @@
       "name": "Brentwood Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 620,
       "website": null,
       "email": null,
       "phone": null,
@@ -2179,7 +2188,7 @@
       "name": "T.A. Brown Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 628,
       "website": null,
       "email": null,
       "phone": null,
@@ -2193,7 +2202,7 @@
       "name": "Bryker Woods Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 632,
       "website": null,
       "email": null,
       "phone": null,
@@ -2207,7 +2216,7 @@
       "name": "Campbell Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 640,
       "website": "https://campbellschool.org/get-involved/your-pta/",
       "email": null,
       "phone": null,
@@ -2221,7 +2230,7 @@
       "name": "Casey Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 641,
       "website": "https://caseypta.org/",
       "email": null,
       "phone": null,
@@ -2235,7 +2244,7 @@
       "name": "Casis Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 644,
       "website": "https://casis.austinschools.org/parents/communications",
       "email": null,
       "phone": null,
@@ -2249,7 +2258,7 @@
       "name": "Clayton Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11673,
       "website": "https://clayton.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2263,7 +2272,7 @@
       "name": "Cook Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 649,
       "website": "https://cook.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2277,7 +2286,7 @@
       "name": "Cowan Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 9973,
       "website": "https://cowan.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2291,7 +2300,7 @@
       "name": "Cunningham Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 652,
       "website": "https://www.cobrapta.org/",
       "email": null,
       "phone": null,
@@ -2305,7 +2314,7 @@
       "name": "Davis Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 654,
       "website": "https://www.davisdolphins.org/",
       "email": null,
       "phone": null,
@@ -2333,7 +2342,7 @@
       "name": "Doss Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 666,
       "website": "https://www.dosspta.org/",
       "email": null,
       "phone": null,
@@ -2347,7 +2356,7 @@
       "name": "Galindo Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 678,
       "website": "https://galindo.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2361,7 +2370,7 @@
       "name": "Govalle Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 679,
       "website": "https://www.govallepta.com/",
       "email": null,
       "phone": null,
@@ -2375,7 +2384,7 @@
       "name": "Graham Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 684,
       "website": "https://graham.austinschools.org/",
       "email": null,
       "phone": null,
@@ -2389,7 +2398,7 @@
       "name": "Gullett Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 688,
       "website": null,
       "email": null,
       "phone": null,
@@ -2403,7 +2412,7 @@
       "name": "Harris Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 692,
       "website": "https://harris.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2417,7 +2426,7 @@
       "name": "Highland Park Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 696,
       "website": "https://www.hppta.org/",
       "email": null,
       "phone": null,
@@ -2431,7 +2440,7 @@
       "name": "Hill Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 700,
       "website": "https://hillpta.org/",
       "email": null,
       "phone": null,
@@ -2445,7 +2454,7 @@
       "name": "Houston Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11908,
       "website": "https://houston.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2459,7 +2468,7 @@
       "name": "Jordan Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 718,
       "website": "https://www.jordanelementarypta.com/",
       "email": null,
       "phone": null,
@@ -2473,7 +2482,7 @@
       "name": "Joslin Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 720,
       "website": "https://joslin.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2487,7 +2496,7 @@
       "name": "Kiker Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 721,
       "website": "https://www.kikerpta.org/",
       "email": null,
       "phone": null,
@@ -2501,7 +2510,7 @@
       "name": "Kocurek Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 723,
       "website": "https://kocurek.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2515,7 +2524,7 @@
       "name": "Langford Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 730,
       "website": "https://langford.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2529,7 +2538,7 @@
       "name": "Lee Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 736,
       "website": "https://lee.austinschools.org/",
       "email": null,
       "phone": null,
@@ -2543,7 +2552,7 @@
       "name": "Maplewood Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 744,
       "website": "https://www.maplewoodelementary.com/",
       "email": null,
       "phone": null,
@@ -2557,7 +2566,7 @@
       "name": "Mathews Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 752,
       "website": "https://mathews360.com/",
       "email": null,
       "phone": null,
@@ -2571,7 +2580,7 @@
       "name": "McBee Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 10026,
       "website": "https://mcbee.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2585,7 +2594,7 @@
       "name": "Menchaca Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 6476,
       "website": "https://menchaca.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2599,7 +2608,7 @@
       "name": "Mills Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 761,
       "website": "https://mills.austinschools.org/pta",
       "email": null,
       "phone": null,
@@ -2613,7 +2622,7 @@
       "name": "Norman-Sims Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 848,
       "website": "https://norman-sims.austinschools.org/pta",
       "email": null,
       "phone": null,
@@ -2627,7 +2636,7 @@
       "name": "Oak Hill Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 776,
       "website": "https://www.ohepta.org/",
       "email": null,
       "phone": null,
@@ -2641,7 +2650,7 @@
       "name": "Odom Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 784,
       "website": "https://odom.austinschools.org/transition",
       "email": null,
       "phone": null,
@@ -2655,7 +2664,7 @@
       "name": "Ortega Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 788,
       "website": "https://ortega.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2669,7 +2678,7 @@
       "name": "Overton Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11837,
       "website": "https://overton.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2683,7 +2692,7 @@
       "name": "Palm Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 789,
       "website": "https://palm.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2697,7 +2706,7 @@
       "name": "Patton Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 792,
       "website": "https://patton.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2711,7 +2720,7 @@
       "name": "Pickle Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11395,
       "website": "https://pickle.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2725,7 +2734,7 @@
       "name": "Reilly Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 10382,
       "website": "https://reilly.austinschools.org/about-us/pta",
       "email": null,
       "phone": null,
@@ -2753,7 +2762,7 @@
       "name": "Rodriguez Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11885,
       "website": "https://rodriguez.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2767,7 +2776,7 @@
       "name": "Sanchez Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 834,
       "website": "https://www.sanchezpta.org/",
       "email": null,
       "phone": null,
@@ -2781,7 +2790,7 @@
       "name": "Summitt Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 856,
       "website": "https://summitteagles.org/",
       "email": null,
       "phone": null,
@@ -2809,7 +2818,7 @@
       "name": "Travis Heights Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 864,
       "website": "https://travisheights.austinschools.org/support/pta",
       "email": null,
       "phone": null,
@@ -2823,7 +2832,7 @@
       "name": "Walnut Creek Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 872,
       "website": "https://walnutcreek.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2837,7 +2846,7 @@
       "name": "Williams Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 879,
       "website": "https://williams.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2865,7 +2874,7 @@
       "name": "Wooten Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 888,
       "website": "https://wooten.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -2879,7 +2888,7 @@
       "name": "Zavala Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 10054,
       "website": "https://zavala.austinschools.org/",
       "email": null,
       "phone": null,
@@ -2893,7 +2902,7 @@
       "name": "Zilker Elementary School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 896,
       "website": "https://www.zilkerpta.org/",
       "email": null,
       "phone": null,
@@ -2907,7 +2916,7 @@
       "name": "Bailey Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 590,
       "website": "https://www.baileybearspta.org/",
       "email": null,
       "phone": null,
@@ -2935,9 +2944,9 @@
       "name": "Burnet Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
-      "website": "https://www.joinpta.org/",
-      "email": null,
+      "texas_pta_id": 636,
+      "website": "https://burnet.austinschools.org/parents/pta",
+      "email": "brianna.rivas-benavides@austinisd.org",
       "phone": null,
       "facebook_url": null,
       "instagram_url": null,
@@ -2949,7 +2958,7 @@
       "name": "Covington Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 650,
       "website": "https://www.facebook.com/covingtonmpta",
       "email": null,
       "phone": null,
@@ -2963,7 +2972,7 @@
       "name": "Garcia YMLA PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 11851,
       "website": "https://garcia.austinschools.org/",
       "email": null,
       "phone": null,
@@ -2977,7 +2986,7 @@
       "name": "General Marshall Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 2312751,
       "website": "https://marshall.austinschools.org/parents/ptsa",
       "email": null,
       "phone": null,
@@ -2991,7 +3000,7 @@
       "name": "Gorzycki Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 2227289,
       "website": "https://gorzycki.austinschools.org/",
       "email": null,
       "phone": null,
@@ -3005,7 +3014,7 @@
       "name": "Kealing Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 722,
       "website": "https://kealing.austinschools.org/",
       "email": null,
       "phone": null,
@@ -3019,7 +3028,7 @@
       "name": "Lamar Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 728,
       "website": "https://lamar.austinschools.org/",
       "email": null,
       "phone": null,
@@ -3033,7 +3042,7 @@
       "name": "Lively Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 676,
       "website": "https://lively.austinschools.org/parents/ptsa",
       "email": null,
       "phone": null,
@@ -3075,7 +3084,7 @@
       "name": "Murchison Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 764,
       "website": "https://murchison.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -3089,7 +3098,7 @@
       "name": "O. Henry Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 772,
       "website": "https://ohenry.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -3117,7 +3126,7 @@
       "name": "Small Middle School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 645,
       "website": "https://small.austinschools.org/parents/parent-info-center",
       "email": null,
       "phone": null,
@@ -3131,7 +3140,7 @@
       "name": "Eastside Early College High School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 716,
       "website": "https://eastside.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -3145,7 +3154,7 @@
       "name": "Travis Early College High School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 868,
       "website": "https://travis.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
@@ -3159,13 +3168,377 @@
       "name": "Rosedale School PTA",
       "pta_type": "PTA",
       "status": "Established",
-      "texas_pta_id": null,
+      "texas_pta_id": 578,
       "website": "https://rosedale.austinschools.org/parents/pta",
       "email": null,
       "phone": null,
       "facebook_url": null,
       "instagram_url": null,
       "last_verified": "2026-09-18"
+    },
+    {
+      "pta_id": 84,
+      "internal_pta_id": "PTA-227901028",
+      "name": "Richards School for Young Women Leaders (Ann Richards) PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 11830,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 85,
+      "internal_pta_id": "PTA-227901163",
+      "name": "Hart Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 693,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 86,
+      "internal_pta_id": "PTA-227901065",
+      "name": "Sadler Means YWLA PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2269715,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 87,
+      "internal_pta_id": "PTA-227901008",
+      "name": "Crockett Early College High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 648,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 88,
+      "internal_pta_id": "PTA-227901151",
+      "name": "Pillow Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 808,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 89,
+      "internal_pta_id": "PTA-227901160",
+      "name": "Linder Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 740,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 90,
+      "internal_pta_id": "PTA-227901186",
+      "name": "Guerrero Thompson Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2256868,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 91,
+      "internal_pta_id": "PTA-227901055",
+      "name": "Dobie Middle School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 664,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 92,
+      "internal_pta_id": "PTA-227901188",
+      "name": "Padrón Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2262983,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 93,
+      "internal_pta_id": "PTA-227901013",
+      "name": "Bowie High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 619,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 94,
+      "internal_pta_id": "PTA-227901009",
+      "name": "Anderson High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 580,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 95,
+      "internal_pta_id": "PTA-227901190",
+      "name": "Perez Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 11685,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 96,
+      "internal_pta_id": "PTA-227901018",
+      "name": "Liberal Arts and Science Academy (LASA) PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2311835,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 97,
+      "internal_pta_id": "PTA-227901014",
+      "name": "LBJ Early College High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 712,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 98,
+      "internal_pta_id": "PTA-227901005",
+      "name": "McCallum High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 756,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 99,
+      "internal_pta_id": "PTA-227901004",
+      "name": "Navarro Early College High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 732,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 100,
+      "internal_pta_id": "PTA-227901006",
+      "name": "Northeast Early College High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 828,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 101,
+      "internal_pta_id": "PTA-227901125",
+      "name": "Oak Springs Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 10136,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 102,
+      "internal_pta_id": "PTA-227901129",
+      "name": "Pecan Springs Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 804,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 103,
+      "internal_pta_id": "PTA-227901130",
+      "name": "Pleasant Hill Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 812,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 104,
+      "internal_pta_id": "PTA-227901136",
+      "name": "St. Elmo Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 852,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 105,
+      "internal_pta_id": "PTA-227901002",
+      "name": "Austin High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 588,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 106,
+      "internal_pta_id": "PTA-227901177",
+      "name": "Uphaus Early Childhood Center PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2289701,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 107,
+      "internal_pta_id": "PTA-227901017",
+      "name": "Akins Early College High School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 10073,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 108,
+      "internal_pta_id": "PTA-227901053",
+      "name": "Webb Middle School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 2288164,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
+    },
+    {
+      "pta_id": 109,
+      "internal_pta_id": "PTA-227901152",
+      "name": "Wooldridge Elementary School PTA",
+      "pta_type": "PTA",
+      "status": "Established",
+      "texas_pta_id": 884,
+      "website": null,
+      "email": null,
+      "phone": null,
+      "facebook_url": null,
+      "instagram_url": null,
+      "last_verified": "2026-09-22"
     }
   ],
   "campus_pta": [
@@ -4081,6 +4454,292 @@
       "start_date": null,
       "end_date": null,
       "is_current": 1
+    },
+    {
+      "campus_pta_id": 84,
+      "campus_id": 122,
+      "pta_id": 84,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 85,
+      "campus_id": 34,
+      "pta_id": 85,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 86,
+      "campus_id": 97,
+      "pta_id": 86,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 87,
+      "campus_id": 104,
+      "pta_id": 87,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 88,
+      "campus_id": 62,
+      "pta_id": 88,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 89,
+      "campus_id": 44,
+      "pta_id": 89,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 90,
+      "campus_id": 31,
+      "pta_id": 90,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 91,
+      "campus_id": 85,
+      "pta_id": 91,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 92,
+      "campus_id": 56,
+      "pta_id": 92,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 93,
+      "campus_id": 103,
+      "pta_id": 93,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 94,
+      "campus_id": 101,
+      "pta_id": 94,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 95,
+      "campus_id": 60,
+      "pta_id": 95,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 96,
+      "campus_id": 111,
+      "pta_id": 96,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 97,
+      "campus_id": 112,
+      "pta_id": 97,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 98,
+      "campus_id": 114,
+      "pta_id": 98,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 99,
+      "campus_id": 115,
+      "pta_id": 99,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 100,
+      "campus_id": 116,
+      "pta_id": 100,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 101,
+      "campus_id": 52,
+      "pta_id": 101,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 102,
+      "campus_id": 59,
+      "pta_id": 102,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 103,
+      "campus_id": 63,
+      "pta_id": 103,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 104,
+      "campus_id": 68,
+      "pta_id": 104,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 105,
+      "campus_id": 102,
+      "pta_id": 105,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 106,
+      "campus_id": 72,
+      "pta_id": 106,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 107,
+      "campus_id": 100,
+      "pta_id": 107,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 108,
+      "campus_id": 99,
+      "pta_id": 108,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
+    },
+    {
+      "campus_pta_id": 109,
+      "campus_id": 77,
+      "pta_id": 109,
+      "relationship_type": "PTA",
+      "status": null,
+      "school_year": null,
+      "start_date": null,
+      "end_date": null,
+      "is_current": 1
     }
   ],
   "campus_accountability": [],
@@ -4759,6 +5418,114 @@
       "publisher": "Austin Council PTA",
       "accessed_at": "2026-09-18",
       "notes": "Names in red denote VT lead; Interim/Sub designations preserved."
+    },
+    {
+      "source_id": 76,
+      "source_type": "Directory composition",
+      "name": "Austin Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Austin Vertical Team clusters: O. Henry (Barton Hills, Bryker Woods, Casis, Mathews, Zilker) and Small (Oak Hill, Patton). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 77,
+      "source_type": "Directory composition",
+      "name": "Akins Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Akins cluster: Paredes (Blazier, Casey, Kocurek, Langford, Menchaca, Palm, Perez). Directory composition, not an official AISD feeder map. Paredes remains marked inactive on the campus record."
+    },
+    {
+      "source_id": 78,
+      "source_type": "Directory composition",
+      "name": "Anderson Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Anderson cluster: Murchison (Davis, Doss, Hill, Pillow, Summitt). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 79,
+      "source_type": "Directory composition",
+      "name": "Bowie Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Bowie clusters: Bailey (Baranoff, Cowan) and Gorzycki (Baldwin, Bear Creek, Clayton, Kiker, Mills). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 80,
+      "source_type": "Directory composition",
+      "name": "Crockett Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Crockett clusters: Covington (Boone, Cunningham, Joslin, Sunset Valley) and Bedichek (Galindo, Odom, Pleasant Hill, St. Elmo, Williams). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 81,
+      "source_type": "Directory composition",
+      "name": "Eastside Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Eastside cluster: Martin (Allison, Govalle, Ortega, Sanchez, Zavala). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 82,
+      "source_type": "Directory composition",
+      "name": "McCallum Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "McCallum clusters: Kealing (Blackshear, Campbell, Lee, Maplewood, Oak Springs) and Lamar (Brentwood, Gullett, Highland Park, Reilly, Ridgetop). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 83,
+      "source_type": "Directory composition",
+      "name": "Navarro Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Navarro cluster: Burnet (Cook, Guerrero Thompson, McBee, Padrón, Wooldridge, Wooten). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 84,
+      "source_type": "Directory composition",
+      "name": "LBJ Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "LBJ cluster: Garcia YMLA and Sadler Means YWLA share Andrews, Blanton, Harris, Pecan Springs, Jordan, Overton, Norman-Sims. Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 85,
+      "source_type": "Directory composition",
+      "name": "Northeast Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Northeast clusters: General Marshall and Dobie share Graham, Hart, Walnut Creek; Webb (Barrington, T.A. Brown, Pickle, Winn). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 86,
+      "source_type": "Directory composition",
+      "name": "Travis Vertical Team campus grouping",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Travis clusters: Lively (Becker, Dawson, Linder, Travis Heights, Uphaus) and Mendez (Houston, Rodriguez, Widen). Directory composition, not an official AISD feeder map."
+    },
+    {
+      "source_id": 87,
+      "source_type": "Directory composition",
+      "name": "Special Campuses Vertical Team roster",
+      "url": null,
+      "publisher": "Project directory",
+      "accessed_at": "2026-09-22",
+      "notes": "Special Campuses collection: Alternative Learning Center, Richards School (Ann Richards), Garza Independence, LASA, International High School, Rosedale. Roster only; not an MS/ES grouping or official AISD feeder map."
     }
   ],
   "source_evidence": [
@@ -5575,6 +6342,193 @@
       "verified_at": "2026-09-18",
       "confidence": "High",
       "notes": "Current PTA evidence found in AISD/campus or PTA source."
+    },
+    {
+      "evidence_id": 75,
+      "source_id": 76,
+      "entity_type": "vertical_team_group",
+      "entity_id": "1",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Austin Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 76,
+      "source_id": 76,
+      "entity_type": "vertical_team_group",
+      "entity_id": "2",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Austin Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 77,
+      "source_id": 77,
+      "entity_type": "vertical_team_group",
+      "entity_id": "3",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Akins Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map. Paredes campus status is Verified inactive."
+    },
+    {
+      "evidence_id": 78,
+      "source_id": 78,
+      "entity_type": "vertical_team_group",
+      "entity_id": "4",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Anderson Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 79,
+      "source_id": 79,
+      "entity_type": "vertical_team_group",
+      "entity_id": "5",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Bowie Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 80,
+      "source_id": 79,
+      "entity_type": "vertical_team_group",
+      "entity_id": "6",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Bowie Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 81,
+      "source_id": 80,
+      "entity_type": "vertical_team_group",
+      "entity_id": "7",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Crockett Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 82,
+      "source_id": 80,
+      "entity_type": "vertical_team_group",
+      "entity_id": "8",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Crockett Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 83,
+      "source_id": 81,
+      "entity_type": "vertical_team_group",
+      "entity_id": "9",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Eastside Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 84,
+      "source_id": 82,
+      "entity_type": "vertical_team_group",
+      "entity_id": "10",
+      "evidence_type": "directory_composition",
+      "evidence_text": "McCallum Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 85,
+      "source_id": 82,
+      "entity_type": "vertical_team_group",
+      "entity_id": "11",
+      "evidence_type": "directory_composition",
+      "evidence_text": "McCallum Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 86,
+      "source_id": 83,
+      "entity_type": "vertical_team_group",
+      "entity_id": "12",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Navarro Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 87,
+      "source_id": 84,
+      "entity_type": "vertical_team_group",
+      "entity_id": "13",
+      "evidence_type": "directory_composition",
+      "evidence_text": "LBJ Vertical Team shared campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 88,
+      "source_id": 85,
+      "entity_type": "vertical_team_group",
+      "entity_id": "14",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Northeast Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 89,
+      "source_id": 85,
+      "entity_type": "vertical_team_group",
+      "entity_id": "15",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Northeast Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 90,
+      "source_id": 86,
+      "entity_type": "vertical_team_group",
+      "entity_id": "16",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Travis Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
+    },
+    {
+      "evidence_id": 91,
+      "source_id": 86,
+      "entity_type": "vertical_team_group",
+      "entity_id": "17",
+      "evidence_type": "directory_composition",
+      "evidence_text": "Travis Vertical Team campus cluster for directory display.",
+      "verified_at": "2026-09-22",
+      "confidence": "directory",
+      "notes": "Not an official AISD feeder map."
     }
   ],
   "people": [
@@ -8393,7 +9347,7 @@
     {
       "vertical_team_id": 1,
       "name": "Akins",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 100,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8429,7 +9383,7 @@
     {
       "vertical_team_id": 5,
       "name": "Crockett",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 104,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8438,7 +9392,7 @@
     {
       "vertical_team_id": 6,
       "name": "Eastside",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 105,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8447,7 +9401,7 @@
     {
       "vertical_team_id": 7,
       "name": "LBJ",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 112,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8465,7 +9419,7 @@
     {
       "vertical_team_id": 9,
       "name": "Navarro",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 115,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8474,7 +9428,7 @@
     {
       "vertical_team_id": 10,
       "name": "Northeast",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 116,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8483,7 +9437,7 @@
     {
       "vertical_team_id": 11,
       "name": "Travis",
-      "high_school_campus_id": null,
+      "high_school_campus_id": 119,
       "school_year": "2025-26",
       "status": "historical",
       "website": "https://www.austincouncilpta.org/vertical-teams",
@@ -8506,87 +9460,152 @@
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 101,
       "vertical_team_id": 2,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 102,
       "vertical_team_id": 3,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 95,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 98,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 7,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 80,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 51,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 58,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 103,
       "vertical_team_id": 4,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 104,
       "vertical_team_id": 5,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 105,
       "vertical_team_id": 6,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 112,
       "vertical_team_id": 7,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 114,
       "vertical_team_id": 8,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 115,
       "vertical_team_id": 9,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 116,
       "vertical_team_id": 10,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
-      "campus_id": 100,
+      "campus_id": 119,
       "vertical_team_id": 11,
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
       "campus_id": 72,
@@ -8594,15 +9613,8 @@
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
-    },
-    {
-      "campus_id": 122,
-      "vertical_team_id": 12,
-      "is_current": 0,
-      "start_date": "2025-07-01",
-      "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
       "campus_id": 106,
@@ -8610,7 +9622,8 @@
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
     },
     {
       "campus_id": 111,
@@ -8618,7 +9631,1498 @@
       "is_current": 0,
       "start_date": "2025-07-01",
       "end_date": "2026-06-30",
-      "school_year": "2025-26"
+      "school_year": "2025-26",
+      "source_id": 75
+    },
+    {
+      "campus_id": 122,
+      "vertical_team_id": 12,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 75
+    },
+    {
+      "campus_id": 16,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 19,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 46,
+      "vertical_team_id": 3,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 76
+    },
+    {
+      "campus_id": 96,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 12,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 18,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 41,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 42,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 48,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 57,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 60,
+      "vertical_team_id": 1,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 77
+    },
+    {
+      "campus_id": 94,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 25,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 27,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 36,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 62,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 69,
+      "vertical_team_id": 2,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 78
+    },
+    {
+      "campus_id": 81,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 88,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 5,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 22,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 4,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 8,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 20,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 40,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 49,
+      "vertical_team_id": 4,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 79
+    },
+    {
+      "campus_id": 84,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 82,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 13,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 23,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 39,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 70,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 28,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 53,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 63,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 68,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 75,
+      "vertical_team_id": 5,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 80
+    },
+    {
+      "campus_id": 92,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 1,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 29,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 54,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 67,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 79,
+      "vertical_team_id": 6,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 81
+    },
+    {
+      "campus_id": 89,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 90,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 10,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 17,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 43,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 45,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 52,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 14,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 32,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 35,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 64,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 65,
+      "vertical_team_id": 8,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 82
+    },
+    {
+      "campus_id": 83,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 21,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 31,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 47,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 56,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 77,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 78,
+      "vertical_team_id": 9,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 83
+    },
+    {
+      "campus_id": 2,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 11,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 33,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 38,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 50,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 55,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 59,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 86,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 97,
+      "vertical_team_id": 7,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 84
+    },
+    {
+      "campus_id": 6,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 15,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 30,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 34,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 61,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 73,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 76,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 85,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 87,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 99,
+      "vertical_team_id": 10,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 85
+    },
+    {
+      "campus_id": 9,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 26,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 37,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 44,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 66,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 71,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 74,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 91,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 93,
+      "vertical_team_id": 11,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 86
+    },
+    {
+      "campus_id": 120,
+      "vertical_team_id": 12,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 87
+    },
+    {
+      "campus_id": 110,
+      "vertical_team_id": 12,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 87
+    },
+    {
+      "campus_id": 121,
+      "vertical_team_id": 12,
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "school_year": "2025-26",
+      "source_id": 87
+    }
+  ],
+  "vertical_team_groups": [
+    {
+      "vertical_team_group_id": 1,
+      "vertical_team_id": 3,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 76
+    },
+    {
+      "vertical_team_group_id": 2,
+      "vertical_team_id": 3,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 76
+    },
+    {
+      "vertical_team_group_id": 3,
+      "vertical_team_id": 1,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 77
+    },
+    {
+      "vertical_team_group_id": 4,
+      "vertical_team_id": 2,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 78
+    },
+    {
+      "vertical_team_group_id": 5,
+      "vertical_team_id": 4,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 79
+    },
+    {
+      "vertical_team_group_id": 6,
+      "vertical_team_id": 4,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 79
+    },
+    {
+      "vertical_team_group_id": 7,
+      "vertical_team_id": 5,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 80
+    },
+    {
+      "vertical_team_group_id": 8,
+      "vertical_team_id": 5,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 80
+    },
+    {
+      "vertical_team_group_id": 9,
+      "vertical_team_id": 6,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 81
+    },
+    {
+      "vertical_team_group_id": 10,
+      "vertical_team_id": 8,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 82
+    },
+    {
+      "vertical_team_group_id": 11,
+      "vertical_team_id": 8,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 82
+    },
+    {
+      "vertical_team_group_id": 12,
+      "vertical_team_id": 9,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 83
+    },
+    {
+      "vertical_team_group_id": 13,
+      "vertical_team_id": 7,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 84
+    },
+    {
+      "vertical_team_group_id": 14,
+      "vertical_team_id": 10,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 85
+    },
+    {
+      "vertical_team_group_id": 15,
+      "vertical_team_id": 10,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 85
+    },
+    {
+      "vertical_team_group_id": 16,
+      "vertical_team_id": 11,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 86
+    },
+    {
+      "vertical_team_group_id": 17,
+      "vertical_team_id": 11,
+      "school_year": "2025-26",
+      "is_current": 0,
+      "start_date": "2025-07-01",
+      "end_date": "2026-06-30",
+      "source_id": 86
+    }
+  ],
+  "vertical_team_group_parents": [
+    {
+      "vertical_team_group_parent_id": 1,
+      "vertical_team_group_id": 1,
+      "campus_id": 95
+    },
+    {
+      "vertical_team_group_parent_id": 2,
+      "vertical_team_group_id": 2,
+      "campus_id": 98
+    },
+    {
+      "vertical_team_group_parent_id": 3,
+      "vertical_team_group_id": 3,
+      "campus_id": 96
+    },
+    {
+      "vertical_team_group_parent_id": 4,
+      "vertical_team_group_id": 4,
+      "campus_id": 94
+    },
+    {
+      "vertical_team_group_parent_id": 5,
+      "vertical_team_group_id": 5,
+      "campus_id": 81
+    },
+    {
+      "vertical_team_group_parent_id": 6,
+      "vertical_team_group_id": 6,
+      "campus_id": 88
+    },
+    {
+      "vertical_team_group_parent_id": 7,
+      "vertical_team_group_id": 7,
+      "campus_id": 84
+    },
+    {
+      "vertical_team_group_parent_id": 8,
+      "vertical_team_group_id": 8,
+      "campus_id": 82
+    },
+    {
+      "vertical_team_group_parent_id": 9,
+      "vertical_team_group_id": 9,
+      "campus_id": 92
+    },
+    {
+      "vertical_team_group_parent_id": 10,
+      "vertical_team_group_id": 10,
+      "campus_id": 89
+    },
+    {
+      "vertical_team_group_parent_id": 11,
+      "vertical_team_group_id": 11,
+      "campus_id": 90
+    },
+    {
+      "vertical_team_group_parent_id": 12,
+      "vertical_team_group_id": 12,
+      "campus_id": 83
+    },
+    {
+      "vertical_team_group_parent_id": 13,
+      "vertical_team_group_id": 13,
+      "campus_id": 86
+    },
+    {
+      "vertical_team_group_parent_id": 14,
+      "vertical_team_group_id": 13,
+      "campus_id": 97
+    },
+    {
+      "vertical_team_group_parent_id": 15,
+      "vertical_team_group_id": 14,
+      "campus_id": 87
+    },
+    {
+      "vertical_team_group_parent_id": 16,
+      "vertical_team_group_id": 14,
+      "campus_id": 85
+    },
+    {
+      "vertical_team_group_parent_id": 17,
+      "vertical_team_group_id": 15,
+      "campus_id": 99
+    },
+    {
+      "vertical_team_group_parent_id": 18,
+      "vertical_team_group_id": 16,
+      "campus_id": 91
+    },
+    {
+      "vertical_team_group_parent_id": 19,
+      "vertical_team_group_id": 17,
+      "campus_id": 93
+    }
+  ],
+  "vertical_team_group_members": [
+    {
+      "vertical_team_group_member_id": 1,
+      "vertical_team_group_id": 1,
+      "campus_id": 7
+    },
+    {
+      "vertical_team_group_member_id": 2,
+      "vertical_team_group_id": 1,
+      "campus_id": 80
+    },
+    {
+      "vertical_team_group_member_id": 3,
+      "vertical_team_group_id": 2,
+      "campus_id": 51
+    },
+    {
+      "vertical_team_group_member_id": 4,
+      "vertical_team_group_id": 2,
+      "campus_id": 58
+    },
+    {
+      "vertical_team_group_member_id": 5,
+      "vertical_team_group_id": 1,
+      "campus_id": 16
+    },
+    {
+      "vertical_team_group_member_id": 6,
+      "vertical_team_group_id": 1,
+      "campus_id": 19
+    },
+    {
+      "vertical_team_group_member_id": 7,
+      "vertical_team_group_id": 1,
+      "campus_id": 46
+    },
+    {
+      "vertical_team_group_member_id": 8,
+      "vertical_team_group_id": 3,
+      "campus_id": 12
+    },
+    {
+      "vertical_team_group_member_id": 9,
+      "vertical_team_group_id": 3,
+      "campus_id": 18
+    },
+    {
+      "vertical_team_group_member_id": 10,
+      "vertical_team_group_id": 3,
+      "campus_id": 41
+    },
+    {
+      "vertical_team_group_member_id": 11,
+      "vertical_team_group_id": 3,
+      "campus_id": 42
+    },
+    {
+      "vertical_team_group_member_id": 12,
+      "vertical_team_group_id": 3,
+      "campus_id": 48
+    },
+    {
+      "vertical_team_group_member_id": 13,
+      "vertical_team_group_id": 3,
+      "campus_id": 57
+    },
+    {
+      "vertical_team_group_member_id": 14,
+      "vertical_team_group_id": 3,
+      "campus_id": 60
+    },
+    {
+      "vertical_team_group_member_id": 15,
+      "vertical_team_group_id": 4,
+      "campus_id": 25
+    },
+    {
+      "vertical_team_group_member_id": 16,
+      "vertical_team_group_id": 4,
+      "campus_id": 27
+    },
+    {
+      "vertical_team_group_member_id": 17,
+      "vertical_team_group_id": 4,
+      "campus_id": 36
+    },
+    {
+      "vertical_team_group_member_id": 18,
+      "vertical_team_group_id": 4,
+      "campus_id": 62
+    },
+    {
+      "vertical_team_group_member_id": 19,
+      "vertical_team_group_id": 4,
+      "campus_id": 69
+    },
+    {
+      "vertical_team_group_member_id": 20,
+      "vertical_team_group_id": 5,
+      "campus_id": 5
+    },
+    {
+      "vertical_team_group_member_id": 21,
+      "vertical_team_group_id": 5,
+      "campus_id": 22
+    },
+    {
+      "vertical_team_group_member_id": 22,
+      "vertical_team_group_id": 6,
+      "campus_id": 4
+    },
+    {
+      "vertical_team_group_member_id": 23,
+      "vertical_team_group_id": 6,
+      "campus_id": 8
+    },
+    {
+      "vertical_team_group_member_id": 24,
+      "vertical_team_group_id": 6,
+      "campus_id": 20
+    },
+    {
+      "vertical_team_group_member_id": 25,
+      "vertical_team_group_id": 6,
+      "campus_id": 40
+    },
+    {
+      "vertical_team_group_member_id": 26,
+      "vertical_team_group_id": 6,
+      "campus_id": 49
+    },
+    {
+      "vertical_team_group_member_id": 27,
+      "vertical_team_group_id": 7,
+      "campus_id": 13
+    },
+    {
+      "vertical_team_group_member_id": 28,
+      "vertical_team_group_id": 7,
+      "campus_id": 23
+    },
+    {
+      "vertical_team_group_member_id": 29,
+      "vertical_team_group_id": 7,
+      "campus_id": 39
+    },
+    {
+      "vertical_team_group_member_id": 30,
+      "vertical_team_group_id": 7,
+      "campus_id": 70
+    },
+    {
+      "vertical_team_group_member_id": 31,
+      "vertical_team_group_id": 8,
+      "campus_id": 28
+    },
+    {
+      "vertical_team_group_member_id": 32,
+      "vertical_team_group_id": 8,
+      "campus_id": 53
+    },
+    {
+      "vertical_team_group_member_id": 33,
+      "vertical_team_group_id": 8,
+      "campus_id": 63
+    },
+    {
+      "vertical_team_group_member_id": 34,
+      "vertical_team_group_id": 8,
+      "campus_id": 68
+    },
+    {
+      "vertical_team_group_member_id": 35,
+      "vertical_team_group_id": 8,
+      "campus_id": 75
+    },
+    {
+      "vertical_team_group_member_id": 36,
+      "vertical_team_group_id": 9,
+      "campus_id": 1
+    },
+    {
+      "vertical_team_group_member_id": 37,
+      "vertical_team_group_id": 9,
+      "campus_id": 29
+    },
+    {
+      "vertical_team_group_member_id": 38,
+      "vertical_team_group_id": 9,
+      "campus_id": 54
+    },
+    {
+      "vertical_team_group_member_id": 39,
+      "vertical_team_group_id": 9,
+      "campus_id": 67
+    },
+    {
+      "vertical_team_group_member_id": 40,
+      "vertical_team_group_id": 9,
+      "campus_id": 79
+    },
+    {
+      "vertical_team_group_member_id": 41,
+      "vertical_team_group_id": 10,
+      "campus_id": 10
+    },
+    {
+      "vertical_team_group_member_id": 42,
+      "vertical_team_group_id": 10,
+      "campus_id": 17
+    },
+    {
+      "vertical_team_group_member_id": 43,
+      "vertical_team_group_id": 10,
+      "campus_id": 43
+    },
+    {
+      "vertical_team_group_member_id": 44,
+      "vertical_team_group_id": 10,
+      "campus_id": 45
+    },
+    {
+      "vertical_team_group_member_id": 45,
+      "vertical_team_group_id": 10,
+      "campus_id": 52
+    },
+    {
+      "vertical_team_group_member_id": 46,
+      "vertical_team_group_id": 11,
+      "campus_id": 14
+    },
+    {
+      "vertical_team_group_member_id": 47,
+      "vertical_team_group_id": 11,
+      "campus_id": 32
+    },
+    {
+      "vertical_team_group_member_id": 48,
+      "vertical_team_group_id": 11,
+      "campus_id": 35
+    },
+    {
+      "vertical_team_group_member_id": 49,
+      "vertical_team_group_id": 11,
+      "campus_id": 64
+    },
+    {
+      "vertical_team_group_member_id": 50,
+      "vertical_team_group_id": 11,
+      "campus_id": 65
+    },
+    {
+      "vertical_team_group_member_id": 51,
+      "vertical_team_group_id": 12,
+      "campus_id": 21
+    },
+    {
+      "vertical_team_group_member_id": 52,
+      "vertical_team_group_id": 12,
+      "campus_id": 31
+    },
+    {
+      "vertical_team_group_member_id": 53,
+      "vertical_team_group_id": 12,
+      "campus_id": 47
+    },
+    {
+      "vertical_team_group_member_id": 54,
+      "vertical_team_group_id": 12,
+      "campus_id": 56
+    },
+    {
+      "vertical_team_group_member_id": 55,
+      "vertical_team_group_id": 12,
+      "campus_id": 77
+    },
+    {
+      "vertical_team_group_member_id": 56,
+      "vertical_team_group_id": 12,
+      "campus_id": 78
+    },
+    {
+      "vertical_team_group_member_id": 57,
+      "vertical_team_group_id": 13,
+      "campus_id": 2
+    },
+    {
+      "vertical_team_group_member_id": 58,
+      "vertical_team_group_id": 13,
+      "campus_id": 11
+    },
+    {
+      "vertical_team_group_member_id": 59,
+      "vertical_team_group_id": 13,
+      "campus_id": 33
+    },
+    {
+      "vertical_team_group_member_id": 60,
+      "vertical_team_group_id": 13,
+      "campus_id": 59
+    },
+    {
+      "vertical_team_group_member_id": 61,
+      "vertical_team_group_id": 13,
+      "campus_id": 38
+    },
+    {
+      "vertical_team_group_member_id": 62,
+      "vertical_team_group_id": 13,
+      "campus_id": 55
+    },
+    {
+      "vertical_team_group_member_id": 63,
+      "vertical_team_group_id": 13,
+      "campus_id": 50
+    },
+    {
+      "vertical_team_group_member_id": 64,
+      "vertical_team_group_id": 14,
+      "campus_id": 30
+    },
+    {
+      "vertical_team_group_member_id": 65,
+      "vertical_team_group_id": 14,
+      "campus_id": 34
+    },
+    {
+      "vertical_team_group_member_id": 66,
+      "vertical_team_group_id": 14,
+      "campus_id": 73
+    },
+    {
+      "vertical_team_group_member_id": 67,
+      "vertical_team_group_id": 15,
+      "campus_id": 6
+    },
+    {
+      "vertical_team_group_member_id": 68,
+      "vertical_team_group_id": 15,
+      "campus_id": 15
+    },
+    {
+      "vertical_team_group_member_id": 69,
+      "vertical_team_group_id": 15,
+      "campus_id": 61
+    },
+    {
+      "vertical_team_group_member_id": 70,
+      "vertical_team_group_id": 15,
+      "campus_id": 76
+    },
+    {
+      "vertical_team_group_member_id": 71,
+      "vertical_team_group_id": 16,
+      "campus_id": 9
+    },
+    {
+      "vertical_team_group_member_id": 72,
+      "vertical_team_group_id": 16,
+      "campus_id": 26
+    },
+    {
+      "vertical_team_group_member_id": 73,
+      "vertical_team_group_id": 16,
+      "campus_id": 44
+    },
+    {
+      "vertical_team_group_member_id": 74,
+      "vertical_team_group_id": 16,
+      "campus_id": 71
+    },
+    {
+      "vertical_team_group_member_id": 75,
+      "vertical_team_group_id": 16,
+      "campus_id": 72
+    },
+    {
+      "vertical_team_group_member_id": 76,
+      "vertical_team_group_id": 17,
+      "campus_id": 37
+    },
+    {
+      "vertical_team_group_member_id": 77,
+      "vertical_team_group_id": 17,
+      "campus_id": 66
+    },
+    {
+      "vertical_team_group_member_id": 78,
+      "vertical_team_group_id": 17,
+      "campus_id": 74
     }
   ],
   "vertical_team_members": [

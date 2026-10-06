@@ -29,7 +29,7 @@ export interface PTAOrganization {
   name?: string;
   pta_type?: string;
   status?: string;
-  texas_pta_id?: string;
+  texas_pta_id?: number;
   website?: string;
   email?: string;
   phone?: string;
@@ -101,6 +101,26 @@ export interface CampusVerticalTeam {
   start_date?: string;
   end_date?: string;
   school_year?: string;
+  source_id?: number;
+}
+export interface VerticalTeamGroup {
+  vertical_team_group_id: number;
+  vertical_team_id: number;
+  school_year: string;
+  is_current: number;
+  start_date?: string;
+  end_date?: string;
+  source_id?: number;
+}
+export interface VerticalTeamGroupParent {
+  vertical_team_group_parent_id: number;
+  vertical_team_group_id: number;
+  campus_id: number;
+}
+export interface VerticalTeamGroupMember {
+  vertical_team_group_member_id: number;
+  vertical_team_group_id: number;
+  campus_id: number;
 }
 export interface VerticalTeamMember {
   vertical_team_member_id: number;
@@ -151,5 +171,8 @@ export interface Database {
   person_roles: PersonRole[];
   vertical_teams: VerticalTeam[];
   campus_vertical_team: CampusVerticalTeam[];
+  vertical_team_groups: VerticalTeamGroup[];
+  vertical_team_group_parents: VerticalTeamGroupParent[];
+  vertical_team_group_members: VerticalTeamGroupMember[];
   vertical_team_members: VerticalTeamMember[];
 }

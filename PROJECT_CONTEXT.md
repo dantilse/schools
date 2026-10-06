@@ -33,7 +33,7 @@ Keep UI independent of storage so JSON can later be replaced by API/database cal
 `/campuses` may redirect to `/schools`.
 
 ## Core data model
-Entities: District, Campus, PTA organization, Person, Person role assignment, Campus accountability, Vertical Team, Campus↔PTA, Campus↔Vertical Team, Vertical Team membership, Source, Source evidence.
+Entities: District, Campus, PTA organization, Person, Person role assignment, Campus accountability, Vertical Team, Campus↔PTA, Campus↔Vertical Team, Vertical Team group, Vertical Team membership, Source, Source evidence.
 
 ### Stable person identity
 `people.person_id` is the stable identity. Never use a person's name as the primary identifier. Names can change and people can have historical assignments.
@@ -51,7 +51,14 @@ Vertical Teams are first-class entities and normally correspond to a high school
 Tables:
 - `vertical_teams`
 - `campus_vertical_team`
+- `vertical_team_groups`
+- `vertical_team_group_parents`
+- `vertical_team_group_members`
 - `vertical_team_members`
+
+`campus_vertical_team` is the explicit year-scoped roster of campuses on a team, including the high school. A collection-style team such as Special Campuses has a roster and no high-school or middle-school groups.
+
+`vertical_team_groups` clusters campuses on a team. Parents live in `vertical_team_group_parents` so one group can have one or more middle schools sharing the same elementary list. Members live in `vertical_team_group_members`. The high-school grouping is the team itself, not a second group type. An elementary in two different groups on the same team gets two group-member rows.
 
 Multiple delegates are separate membership rows.
 
@@ -84,7 +91,8 @@ Names in red denote Vertical Team Leads; Interim/Sub designations were preserved
 - 117 people
 - 117 person role assignments
 - 12 Vertical Teams
-- 15 campus-to-Vertical-Team relationships currently seeded
+- 114 campus-to-Vertical-Team relationships currently seeded
+- 17 Vertical Team groups currently seeded (Austin: O. Henry and Small; Akins: Paredes; Anderson: Murchison; Bowie: Bailey and Gorzycki; Crockett: Covington and Bedichek; Eastside: Martin; McCallum: Kealing and Lamar; Navarro: Burnet; LBJ: Garcia and Sadler Means shared; Northeast: Marshall and Dobie shared, Webb; Travis: Lively and Mendez)
 - 117 Vertical Team memberships
 
 These are seed-state counts, not claims that all data is current or production-verified.
@@ -92,7 +100,7 @@ These are seed-state counts, not claims that all data is current or production-v
 ## Known data issues
 1. Revalidate the 122-campus working list against an authoritative current AISD/TEA list.
 2. Becker and Paredes were marked inactive and may not belong in a current 2026–27 active-campus directory.
-3. Vertical Team campus matching was incomplete during the v1.1 seed; only 15 campus-to-team relationships were created. Fix this before relying on feeder relationships.
+3. Vertical Team campus matching is partial: each named team has its high school; Austin includes O. Henry (Barton Hills, Bryker Woods, Casis, Mathews, Zilker) and Small (Oak Hill, Patton); Akins includes Paredes (Blazier, Casey, Kocurek, Langford, Menchaca, Palm, Perez); Anderson includes Murchison (Davis, Doss, Hill, Pillow, Summitt); Bowie includes Bailey (Baranoff, Cowan) and Gorzycki (Baldwin, Bear Creek, Clayton, Kiker, Mills); Crockett includes Covington (Boone, Cunningham, Joslin, Sunset Valley) and Bedichek (Galindo, Odom, Pleasant Hill, St. Elmo, Williams); Eastside includes Martin (Allison, Govalle, Ortega, Sanchez, Zavala); McCallum includes Kealing (Blackshear, Campbell, Lee, Maplewood, Oak Springs) and Lamar (Brentwood, Gullett, Highland Park, Reilly, Ridgetop); Navarro includes Burnet (Cook, Guerrero Thompson, McBee, Padrón, Wooldridge, Wooten); LBJ includes Garcia YMLA and Sadler Means YWLA sharing Andrews, Blanton, Harris, Pecan Springs, Jordan, Overton, and Norman-Sims; Northeast includes General Marshall and Dobie sharing Graham, Hart, and Walnut Creek, plus Webb (Barrington, T.A. Brown, Pickle, Winn); Travis includes Lively (Becker, Dawson, Linder, Travis Heights, Uphaus) and Mendez (Houston, Rodriguez, Widen); Special Campuses is a roster-only collection: Alternative Learning Center, Richards School (Ann Richards), Garza Independence, LASA, International High School, and Rosedale. Those clusters are directory composition, not an official AISD feeder map. Paredes and Becker remain marked inactive on the campus record.
 4. PTA Presidents and ACPTA Delegates still need research/entry.
 5. Some PTA URLs/statuses are approximate or based on campus/PTA-like pages and need production verification.
 6. Ann Richards and several special/alternative campuses need additional PTA verification.

@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { getCampus, getPerson, getVerticalTeamMembers, getVerticalTeams } from "../lib/data";
+import {
+  getCampus,
+  getPerson,
+  getVerticalTeamCampuses,
+  getVerticalTeamMembers,
+  getVerticalTeams,
+} from "../lib/data";
 
 export default function VerticalTeams() {
   return (
@@ -11,6 +17,7 @@ export default function VerticalTeams() {
         <div className="card-grid">
           {getVerticalTeams().map((t) => {
             const ms = getVerticalTeamMembers(t.vertical_team_id);
+            const campuses = getVerticalTeamCampuses(t.vertical_team_id);
             const hs = t.high_school_campus_id ? getCampus(t.high_school_campus_id) : undefined;
             const lead = ms.find((m) => m.is_vertical_team_lead);
             return (
@@ -18,7 +25,9 @@ export default function VerticalTeams() {
                 <div className="card-topline">{t.school_year}</div>
                 <h2>{t.name}</h2>
                 {hs && <p>{hs.name}</p>}
-                <p className="muted">{ms.length} listed members</p>
+                <p className="muted">
+                  {campuses.length} campuses · {ms.length} listed members
+                </p>
                 {lead && (
                   <p>
                     <strong>VT Lead:</strong> {getPerson(lead.person_id)?.display_name}
